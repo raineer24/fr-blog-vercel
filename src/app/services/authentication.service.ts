@@ -15,7 +15,7 @@ export class AuthenticationService {
 
   login(loginForm: LoginForm) {  
 
-    return this.http.post<any>('/api/auth/signin', {email: loginForm.email, password: loginForm.password}).pipe(
+    return this.http.post<any>('https://prisma-nest-raineer24.vercel.app/api/auth/signin', {email: loginForm.email, password: loginForm.password}).pipe(
       map((token) => {
       
         return token;
