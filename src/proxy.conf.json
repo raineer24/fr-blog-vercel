@@ -1,6 +1,6 @@
 {
-    "/api": {
-        "target":"https://prisma-nest-raineer24.vercel.app",
+    "/api/email": {
+        "target":"https://prisma-nest-raineer24.vercel.app/api/auth/signin",
         "secure": false,
         "changeOrigin": true
     }

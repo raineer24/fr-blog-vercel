@@ -1,2 +1,40 @@
-<p>login works!</p>
-<button (click)="login()" style="height: 500px; width: 1000px;"></button>
+<h1 style="text-align: center;">
+    Login Page
+</h1>
+<form [formGroup]="form" (ngSubmit)="login()">
+    <mat-form-field>
+      <input
+        type="email"
+        matInput
+        placeholder="Email"
+        formControlName="email"
+      />
+      <mat-error *ngIf="email.touched && email.hasError('required')"
+        >Email is required</mat-error
+      >
+      <mat-error *ngIf="email.touched && email.hasError('email')"
+        >Email must be valid</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        type="password"
+        matInput
+        placeholder="Password"
+        formControlName="password"
+      />
+      <mat-error
+        *ngIf="password.touched && password.hasError('required')"
+        >Password is required</mat-error
+      >
+    </mat-form-field>
+
+    <mat-hint>Please fill out all needed information</mat-hint>
+
+    <div class="button">
+      <button mat-button type="submit" [disabled]="!form.valid">
+        Login
+      </button>
+    </div>
+  </form>
