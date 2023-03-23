@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './public/components/login/login.component';
+import { RegisterComponent } from './public/components/register/register.component';
 
 const routes: Routes = [
   {
@@ -10,13 +10,15 @@ const routes: Routes = [
       import('./admin/admin.module').then((m) => m.AdminModule),
   },
   {
-    path: 'login',
-    component: LoginComponent,
+    path: 'public',
+    loadChildren: () =>
+      import('./public/public.module').then((m) => m.PublicModule),
   },
   {
-    path: 'register',
-    component: RegisterComponent
-  }
+    path: '**',
+    redirectTo: 'public',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
