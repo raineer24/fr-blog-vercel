@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  appRoot: "https://prisma-nest-raineer24.vercel.app"
 };
