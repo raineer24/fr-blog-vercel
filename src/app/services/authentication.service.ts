@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap, switchMap } from 'rxjs/operators';
-
+import { environment } from '../../environments/environment';
 export interface LoginForm {
   email: string;
   password: string;
@@ -11,11 +11,12 @@ export interface LoginForm {
   providedIn: 'root',
 })
 export class AuthenticationService {
+  
   constructor(private http: HttpClient) {}
-
+  appRoot = environment.appRoot;
   login(loginForm: LoginForm) {  
-
-    return this.http.post<any>('https://prisma-nest-raineer24.vercel.app/api/auth/signin', {email: loginForm.email, password: loginForm.password}).pipe(
+    console.log(this.appRoot );
+    return this.http.post<any>(`${this.appRoot}auth/signin`, {email: loginForm.email, password: loginForm.password}).pipe(
       map((token) => {
       
         return token;

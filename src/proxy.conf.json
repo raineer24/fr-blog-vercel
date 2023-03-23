@@ -1,6 +1,6 @@
 {
-    "/api/email": {
-        "target":"https://prisma-nest-raineer24.vercel.app/api/auth/signin",
+    "/api": {
+        "target":"http://localhost:5000",
         "secure": false,
         "changeOrigin": true
     }
