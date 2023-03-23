@@ -4,14 +4,18 @@ import { OverviewComponent } from './components/overview/overview.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'over',
+    component: OverviewComponent,
+  },
+  {
+    path: '**',
+    redirectTo: 'login',
     pathMatch: 'full',
-    component: OverviewComponent
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}

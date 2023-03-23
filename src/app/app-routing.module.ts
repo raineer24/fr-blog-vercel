@@ -5,7 +5,7 @@ import { RegisterComponent } from './public/components/register/register.compone
 
 const routes: Routes = [
   {
-    path: ' admin',
+    path: 'admin',
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
   },
