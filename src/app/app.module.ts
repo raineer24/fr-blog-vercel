@@ -13,11 +13,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SharedModule } from './shared/shared.module';
+import { LoadingInterceptor } from './shared/loading/loading.interceptor';
+import { LoadingService } from './shared/loading/loading.service';
 @NgModule({
-  declarations: [
-    AppComponent,
-      ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -33,8 +34,12 @@ import { HttpClientModule } from '@angular/common/http';
     MatSnackBarModule,
     HttpClientModule,
     MatToolbarModule,
+    SharedModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    LoadingService,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
