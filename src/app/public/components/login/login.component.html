@@ -2,6 +2,7 @@
     Login Page
 </h1>
 <form [formGroup]="form" (ngSubmit)="login()">
+  <div class="container">
     <mat-form-field>
       <input
         type="email"
@@ -32,9 +33,11 @@
 
     <mat-hint>Please fill out all needed information</mat-hint>
 
-    <div class="button">
+
       <button mat-button type="submit" [disabled]="!form.valid">
         Login
       </button>
-    </div>
+  </div>
+ 
+
   </form>
