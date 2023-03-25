@@ -9,6 +9,28 @@
       <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="register()">
           <div class="container">
+            <mat-form-field class="full-width">
+              <input
+                type="text"
+                matInput
+                placeholder="First name"
+                formControlName="firstName"
+              />
+              <mat-error *ngIf="firstName.touched && firstName.hasError('required')"
+                >First name is required</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input
+                type="text"
+                matInput
+                placeholder="Last name"
+                formControlName="lastName"
+              />
+              <mat-error *ngIf="lastName.touched && lastName.hasError('required')"
+                >Last name is required</mat-error
+              >
+            </mat-form-field>
             <mat-form-field>
               <input
                 type="email"

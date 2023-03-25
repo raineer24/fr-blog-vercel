@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { map,tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,7 +18,8 @@ export class LoginComponent {
   form: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [Validators.required]),
-  })
+  
+  });
   constructor(
     private authService: AuthenticationService,
     private formBuilder: FormBuilder,
@@ -22,12 +28,14 @@ export class LoginComponent {
 
   login() {
     if (this.form.valid) {
-      this.authService.login({
-        email: this.email.value,
-        password: this.password.value
-      }).pipe(
-        tap(() => this.router.navigate(['admin/over']))
-      ).subscribe()
+      this.authService
+        .login({
+          email: this.email.value,
+          password: this.password.value,
+      
+        })
+        .pipe(tap(() => this.router.navigate(['admin/over'])))
+        .subscribe();
     }
   }
 
@@ -40,5 +48,4 @@ export class LoginComponent {
   }
 
 
- 
 }

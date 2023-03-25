@@ -16,6 +16,8 @@ export class RegisterComponent {
 
       password: new FormControl(null, [Validators.required]),
       passwordConfirm: new FormControl(null, [Validators.required]),
+      firstName: new FormControl(null, [Validators.required]),
+      lastName: new FormControl(null, [Validators.required]),
     },
     {
       validators: CustomValidators.passwordsMatching,
@@ -33,6 +35,8 @@ export class RegisterComponent {
         .create({
           email: this.email.value,
           password: this.password.value,
+          lastName: this.lastName.value,
+          firstName: this.firstName.value,
         })
         .pipe(tap(() => this.router.navigate(['../login'])))
         .subscribe();
@@ -49,5 +53,13 @@ export class RegisterComponent {
 
   get passwordConfirm(): FormControl {
     return this.form.get('passwordConfirm') as FormControl;
+  }
+
+  get firstName(): FormControl {
+    return this.form.get('firstName') as FormControl;
+  }
+
+  get lastName(): FormControl {
+    return this.form.get('lastName') as FormControl;
   }
 }

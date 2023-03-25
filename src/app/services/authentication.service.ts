@@ -13,6 +13,7 @@ export interface LoginForm {
   providedIn: 'root',
 })
 export class AuthenticationService {
+  userInfo: any;
   constructor(private http: HttpClient, private snackbar: MatSnackBar) {}
   appRoot = environment.appRoot;
   login(loginForm: LoginForm) {
@@ -31,30 +32,34 @@ export class AuthenticationService {
   }
 
   create(user: UserI): Observable<UserI> {
-    return this.http.post<UserI>(`${this.appRoot}/api/auth/register`, user).pipe(
-      tap((createdUser: UserI) =>
-        this.snackbar.open(
-          `User ${createdUser.email} created successfully`,
-          'Close',
-          {
-            duration: 2000,
-            horizontalPosition: 'right',
-            verticalPosition: 'top',
-          }
-        )
-      ),
-      catchError((e) => {
-        this.snackbar.open(
-          `User could not be created, due to: ${e.error.message}`,
-          'Close',
-          {
-            duration: 5000,
-            horizontalPosition: 'right',
-            verticalPosition: 'top',
-          }
-        );
-        return throwError(e);
-      })
-    );
+    return this.http
+      .post<UserI>(`${this.appRoot}/api/auth/register`, user)
+      .pipe(
+        tap((createdUser: UserI) => {
+          this.userInfo = createdUser;
+
+          this.snackbar.open(
+            `User ${this.userInfo.user['email']} created successfully`,
+            'Close',
+            {
+              duration: 3000,
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+            }
+          );
+        }),
+        catchError((e) => {
+          this.snackbar.open(
+            `User could not be created, due to: ${e.error.message}`,
+            'Close',
+            {
+              duration: 5000,
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+            }
+          );
+          return throwError(e);
+        })
+      );
   }
 }
