@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from '../../_helpers/custom-validators';
 import { AuthenticationService } from '../../../services/authentication.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -26,7 +27,9 @@ export class RegisterComponent {
 
   constructor(
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private snackbar: MatSnackBar,
+    private route: ActivatedRoute
   ) {}
 
   register() {
@@ -38,8 +41,22 @@ export class RegisterComponent {
           lastName: this.lastName.value,
           firstName: this.firstName.value,
         })
-        .pipe(tap(() => this.router.navigate(['../login'])))
-        .subscribe();
+        .subscribe({
+          next: () => {
+            this.router.navigate(['../login'], { relativeTo: this.route });
+          },
+          error: (error) => {
+            this.snackbar.open(
+              `User could not be created, due to: ${error}`,
+              'Close',
+              {
+                duration: 5000,
+                horizontalPosition: 'right',
+                verticalPosition: 'top',
+              }
+            );
+          },
+        });
     }
   }
 
