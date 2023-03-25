@@ -25,7 +25,8 @@ export class AuthenticationService {
       })
       .pipe(
         map((token) => {
-          console.log('token');
+          localStorage.setItem('nestjs_chat_app', token)
+          console.log('token', token);
           return token;
         })
       );
@@ -49,7 +50,7 @@ export class AuthenticationService {
           );
         }),
         catchError((e) => {
-          console.log('e',e.error);
+          console.log('e', e.error);
           this.snackbar.open(
             `User could not be created, due to: ${e.error}`,
             'Close',

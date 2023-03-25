@@ -18,11 +18,11 @@ const routes: Routes = [
 //     path: 'users',
 //     component: UsersComponent
 //   },
-  {
-    path: '**',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  }
+  // {
+  //   path: '**',
+  //   redirectTo: 'login',
+  //   pathMatch: 'full'
+  // }
 ];
 
 @NgModule({

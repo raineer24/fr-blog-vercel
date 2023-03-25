@@ -18,6 +18,10 @@ import { SharedModule } from './shared/shared.module';
 import { LoadingInterceptor } from './shared/loading/loading.interceptor';
 import { LoadingService } from './shared/loading/loading.service';
 import { ErrorInterceptor } from './guards/error.interceptor';
+import { JwtModule } from '@auth0/angular-jwt';
+export function tokenGetter() {
+  return localStorage.getItem('nestjs_chat_app');
+}
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -36,6 +40,12 @@ import { ErrorInterceptor } from './guards/error.interceptor';
     HttpClientModule,
     MatToolbarModule,
     SharedModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:5000'],
+      },
+    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
