@@ -18,7 +18,7 @@ export class AuthenticationService {
   login(loginForm: LoginForm) {
     console.log(this.appRoot);
     return this.http
-      .post<any>(`${this.appRoot}/api/auth/signin`, {
+      .post<any>(`${this.appRoot}/api/auth/login`, {
         email: loginForm.email,
         password: loginForm.password,
       })
