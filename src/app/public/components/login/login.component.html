@@ -1,9 +1,8 @@
-<h1 style="text-align: center;">
-    Login Page
-</h1>
+<h1 style="text-align: center">Login Page</h1>
+<mat-card-content>
 <form [formGroup]="form" (ngSubmit)="login()">
   <div class="container">
-    <mat-form-field>
+    <mat-form-field class="full-width">
       <input
         type="email"
         matInput
@@ -18,26 +17,30 @@
       >
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="full-width">
       <input
         type="password"
         matInput
         placeholder="Password"
         formControlName="password"
       />
-      <mat-error
-        *ngIf="password.touched && password.hasError('required')"
+      <mat-error *ngIf="password.touched && password.hasError('required')"
         >Password is required</mat-error
       >
     </mat-form-field>
 
     <mat-hint>Please fill out all needed information</mat-hint>
 
-
-      <button mat-button type="submit" [disabled]="!form.valid">
-        Login
-      </button>
+    <mat-card-content>
+      <button
+        class="login"
+        mat-raised-button
+        color="primary"
+        [disabled]="!form.valid"
+      >
+        Login</button
+      >Don't have an account?<a [routerLink]="['/public/register']">Sign Up</a>
+    </mat-card-content>
   </div>
- 
-
-  </form>
+</form>
+</mat-card-content>
