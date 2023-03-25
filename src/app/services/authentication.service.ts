@@ -49,8 +49,9 @@ export class AuthenticationService {
           );
         }),
         catchError((e) => {
+          console.log('e',e.error);
           this.snackbar.open(
-            `User could not be created, due to: ${e.error.message}`,
+            `User could not be created, due to: ${e.error}`,
             'Close',
             {
               duration: 5000,

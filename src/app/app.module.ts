@@ -17,6 +17,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { LoadingInterceptor } from './shared/loading/loading.interceptor';
 import { LoadingService } from './shared/loading/loading.service';
+import { ErrorInterceptor } from './guards/error.interceptor';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -38,6 +39,7 @@ import { LoadingService } from './shared/loading/loading.service';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     LoadingService,
   ],
   bootstrap: [AppComponent],
