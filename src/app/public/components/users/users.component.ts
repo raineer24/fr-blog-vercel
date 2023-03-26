@@ -10,6 +10,7 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class UsersComponent implements OnInit {
   dataSource: UserData | null = null;
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role'];
   constructor(
     private userService: UserService,
     private router: Router,

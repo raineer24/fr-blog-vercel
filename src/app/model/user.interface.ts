@@ -5,13 +5,7 @@ export interface UserI {
   firstName?: string;
   lastName?: string;
   token?: string;
+  role?: string;
 }
 
 
-export interface User {
-  id?: number;
-  email?: string;
-  username?: string;
-  password?: string;
-  name?: string;
-}
