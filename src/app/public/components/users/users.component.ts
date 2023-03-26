@@ -11,6 +11,7 @@ import { PageEvent } from '@angular/material/paginator';
 export class UsersComponent implements OnInit {
   pageEvent: PageEvent | undefined;
   dataSource: UserData | null = null;
+  filterValue!: string;
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role'];
   constructor(
     private userService: UserService,
@@ -26,7 +27,12 @@ export class UsersComponent implements OnInit {
       .findAll(1, 10)
       .pipe(
         tap((users) => console.log(users)),
-        map((userData: UserData) => (this.dataSource = userData))
+        map((userData: UserData) => {
+          // console.log('thisdatasource', this.dataSource);
+          // this.dataSource = userData;
+          console.log('asdasd', (this.dataSource = userData));
+          return (this.dataSource = userData);
+        })
       )
       .subscribe();
   }
@@ -35,8 +41,23 @@ export class UsersComponent implements OnInit {
     let page = event.pageIndex;
     let size = event.pageSize;
 
+    if (this.filterValue == null) {
+      page = page + 1;
+      this.userService
+        .findAll(page, size)
+        .pipe(map((userData: UserData) => (this.dataSource = userData)))
+        .subscribe();
+    } else {
+      this.userService
+        .paginateByName(page, size, this.filterValue)
+        .pipe(map((userData: UserData) => (this.dataSource = userData)))
+        .subscribe();
+    }
+  }
+
+  findByName(firstName: string) {
     this.userService
-      .findAll(page, size)
+      .paginateByName(0, 10, firstName)
       .pipe(map((userData: UserData) => (this.dataSource = userData)))
       .subscribe();
   }

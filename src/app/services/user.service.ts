@@ -25,16 +25,40 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   findAll(page: number, size: number): Observable<UserData> {
+    console.log('approot', `${this.appRoot}/api/users/pages?`);
+    const url = `${this.appRoot}/api/users/pages?`;
+    console.log('url', url);
     let params = new HttpParams();
 
     params = params.append('page', String(page));
     params = params.append('size', String(size));
 
-    return this.http
-      .get<UserData>(`${this.appRoot}/api/users/pages?`, { params })
-      .pipe(
-        map((userData: UserData) => userData),
-        catchError((err) => throwError(err))
-      );
+    return this.http.get(url, { params }).pipe(
+      map((userData: any) => {
+        console.log('userdata', userData);
+        return userData;
+      }),
+      catchError((err) => throwError(err))
+    );
+  }
+
+  paginateByName(
+    page: number,
+    size: number,
+    search: string
+  ): Observable<UserData> {
+    const url = `${this.appRoot}/api/users/pages?`;
+    let params = new HttpParams();
+
+    params = params.append('page', String(page));
+    params = params.append('size', String(size));
+    params = params.append('search', String(search));
+      return this.http.get(url, { params }).pipe(
+      map((userData: any) => {
+        console.log('userdata', userData);
+        return userData;
+      }),
+      catchError((err) => throwError(err))
+    );
   }
 }
