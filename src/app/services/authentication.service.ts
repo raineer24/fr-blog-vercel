@@ -25,8 +25,8 @@ export class AuthenticationService {
       })
       .pipe(
         map((token) => {
-          localStorage.setItem('nestjs_chat_app', token)
-          console.log('token', token);
+          localStorage.setItem('nestjs_chat_app', token['token']);
+          console.log('token', token['token']);
           return token;
         })
       );
