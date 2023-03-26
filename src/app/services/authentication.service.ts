@@ -13,10 +13,18 @@ export interface LoginForm {
   providedIn: 'root',
 })
 export class AuthenticationService {
-  // private userSubject: BehaviorSubject<UserI | null>;
-  // public user: Observable<UserI | null>;
+  private userSubject: BehaviorSubject<UserI | null>;
+  public user: Observable<UserI | null>;
   userInfo: any;
-  constructor(private http: HttpClient, private snackbar: MatSnackBar) {}
+  constructor(private http: HttpClient, private snackbar: MatSnackBar) {
+    this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
+    this.user = this.userSubject.asObservable();
+  }
+
+  public get userValue() {
+    return this.userSubject.value;
+}
+
   appRoot = environment.appRoot;
   login(loginForm: LoginForm) {
     console.log(this.appRoot);
@@ -30,6 +38,7 @@ export class AuthenticationService {
            localStorage.setItem('nestjs_chat_app', userData.access_token);
            localStorage.setItem('user', JSON.stringify(userData.userData));
           console.log('user', userData.userData);
+          this.userSubject.next(userData.userData);
           return userData;
         })
       );

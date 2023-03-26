@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: adminModule,
-    //canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'public',
