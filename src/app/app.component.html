@@ -3,9 +3,18 @@
   <mat-toolbar-row>
     <span>Rain &&</span>
     <span class="example-spacer"></span>
-      <a routerLink="/login">Login</a>
-    <a routerLink="/public/register">Register</a>
-    <a routerLink="/admin">Admin</a>
+    <button mat-flat-button routerLink="/public/users">Users</button>
+   
+    <mat-form-field style="margin-left: 20px;" name="loginRegisterDropdown">
+      <mat-select placeholder="Login">
+        <mat-option (click)="navigateTo('login')">Login</mat-option>
+        <mat-option (click)="navigateTo('register')">Register</mat-option>
+        <!-- <mat-option (click)="navigateTo('update-profile')">Update Profile</mat-option> -->
+        <!-- <mat-option (click)="logout()">Logout</mat-option> -->
+      </mat-select>
+    </mat-form-field>
   </mat-toolbar-row>
 </mat-toolbar>
+
+
 <router-outlet></router-outlet>
