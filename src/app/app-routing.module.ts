@@ -1,13 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './public/components/login/login.component';
 import { RegisterComponent } from './public/components/register/register.component';
 
+const adminModule = () =>
+  import('./admin/admin.module').then((m) => m.AdminModule);
+const publicModule = () =>
+  import('./public/public.module').then((m) => m.PublicModule);
+
 const routes: Routes = [
   {
-    path: 'admin',
-    loadChildren: () =>
-      import('./admin/admin.module').then((m) => m.AdminModule),
+    path: '',
+    loadChildren: adminModule,
+    canActivate: [AuthGuard],
   },
   {
     path: 'public',
@@ -16,8 +22,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'public',
-    pathMatch: 'full',
+    redirectTo: '',
   },
 ];
 

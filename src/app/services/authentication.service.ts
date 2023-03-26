@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, tap, switchMap, catchError, Observable, throwError } from 'rxjs';
+import { map, tap, switchMap, catchError, Observable, throwError, BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserI } from '../model/user.interface';
@@ -13,8 +13,18 @@ export interface LoginForm {
   providedIn: 'root',
 })
 export class AuthenticationService {
+  private userSubject: BehaviorSubject<UserI | null>;
+  public user: Observable<UserI | null>;
   userInfo: any;
-  constructor(private http: HttpClient, private snackbar: MatSnackBar) {}
+  constructor(private http: HttpClient, private snackbar: MatSnackBar) {
+    this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
+    this.user = this.userSubject.asObservable();
+  }
+
+  public get userValue() {
+    return this.userSubject.value;
+}
+
   appRoot = environment.appRoot;
   login(loginForm: LoginForm) {
     console.log(this.appRoot);
@@ -24,9 +34,12 @@ export class AuthenticationService {
         password: loginForm.password,
       })
       .pipe(
-        map((token) => {
-          console.log('token');
-          return token;
+        map((userData) => {
+           localStorage.setItem('nestjs_chat_app', userData.access_token);
+           localStorage.setItem('user', JSON.stringify(userData.userData));
+          console.log('user', userData.userData);
+          this.userSubject.next(userData.userData);
+          return userData;
         })
       );
   }
@@ -49,7 +62,7 @@ export class AuthenticationService {
           );
         }),
         catchError((e) => {
-          console.log('e',e.error);
+          console.log('e', e.error);
           this.snackbar.open(
             `User could not be created, due to: ${e.error}`,
             'Close',

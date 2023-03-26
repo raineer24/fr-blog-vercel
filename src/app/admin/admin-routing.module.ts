@@ -4,14 +4,14 @@ import { OverviewComponent } from './components/overview/overview.component';
 
 const routes: Routes = [
   {
-    path: 'over',
+    path: '',
     component: OverviewComponent,
   },
-  {
-    path: '**',
-    redirectTo: 'login',
-    pathMatch: 'full',
-  },
+  // {
+  //   path: '**',
+  //   redirectTo: 'login',
+  //   pathMatch: 'full',
+  // },
 ];
 
 @NgModule({
