@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, tap, switchMap, catchError, Observable, throwError, BehaviorSubject } from 'rxjs';
+import {
+  map,
+  tap,
+  switchMap,
+  catchError,
+  Observable,
+  throwError,
+  BehaviorSubject,
+} from 'rxjs';
 import { environment } from '../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserI } from '../model/user.interface';
@@ -17,13 +25,15 @@ export class AuthenticationService {
   public user: Observable<UserI | null>;
   userInfo: any;
   constructor(private http: HttpClient, private snackbar: MatSnackBar) {
-    this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
+    this.userSubject = new BehaviorSubject(
+      JSON.parse(localStorage.getItem('user')!)
+    );
     this.user = this.userSubject.asObservable();
   }
 
   public get userValue() {
     return this.userSubject.value;
-}
+  }
 
   appRoot = environment.appRoot;
   login(loginForm: LoginForm) {
@@ -35,9 +45,8 @@ export class AuthenticationService {
       })
       .pipe(
         map((userData) => {
-           localStorage.setItem('nestjs_chat_app', userData.access_token);
-           localStorage.setItem('user', JSON.stringify(userData.userData));
-          console.log('user', userData.userData);
+          localStorage.setItem('nestjs_chat_app', userData.access_token);
+          localStorage.setItem('user', JSON.stringify(userData.userData));
           this.userSubject.next(userData.userData);
           return userData;
         })

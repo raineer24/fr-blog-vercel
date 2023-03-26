@@ -14,7 +14,5 @@ export class OverviewComponent implements OnInit {
     this.user = this.authService.userValue;
   }
 
-  ngOnInit(): void {
-    console.log('this.user', this.user);
-  }
+  ngOnInit(): void {}
 }
