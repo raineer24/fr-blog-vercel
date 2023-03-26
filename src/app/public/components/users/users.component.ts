@@ -9,6 +9,7 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
+  pageEvent: PageEvent | undefined;
   dataSource: UserData | null = null;
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role'];
   constructor(
@@ -27,6 +28,16 @@ export class UsersComponent implements OnInit {
         tap((users) => console.log(users)),
         map((userData: UserData) => (this.dataSource = userData))
       )
+      .subscribe();
+  }
+
+  onPaginateChange(event: PageEvent) {
+    let page = event.pageIndex;
+    let size = event.pageSize;
+
+    this.userService
+      .findAll(page, size)
+      .pipe(map((userData: UserData) => (this.dataSource = userData)))
       .subscribe();
   }
 }
