@@ -1,11 +1,53 @@
-.container {
+
+:host {
+    height: 100vh;
+    display: grid;
+    grid-template-areas:
+      "loginCard"
+      "footer";
+    grid-template-rows: 1fr auto;
+  }
+  
+  img {
+    width: 250px;
+    padding: 2em;
+  }
+  
+  .register-container {
+    grid-area: loginCard;
+    justify-self: center;
+    text-align: center;
+  }
+  
+  mat-card {
+    width: 380px;
+    height: 700px;
+  }
+  
+  mat-card form {
     display: flex;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    flex-direction: center;
-}
-
-.container > * {
-    width: 40%;
-}
+  }
+  
+  mat-form-field {
+    width: 100%;
+    padding: 1em;
+  }
+  
+  .form-actions {
+    margin-top: 3em;
+  }
+  
+  app-footer {
+    grid-area: footer;
+    font-size: 0.8rem;
+  }
+  
+  @media(max-width: 768px) {
+    mat-card {
+      width: 330px;
+    }
+  }
+  
