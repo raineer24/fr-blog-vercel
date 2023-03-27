@@ -19,6 +19,7 @@ export class RegisterComponent {
       passwordConfirm: new FormControl(null, [Validators.required]),
       firstName: new FormControl(null, [Validators.required]),
       lastName: new FormControl(null, [Validators.required]),
+      username: new FormControl(null, [Validators.required]),
     },
     {
       validators: CustomValidators.passwordsMatching,
@@ -40,6 +41,7 @@ export class RegisterComponent {
           password: this.password.value,
           lastName: this.lastName.value,
           firstName: this.firstName.value,
+          username: this.username.value,
         })
         .subscribe({
           next: () => {
@@ -78,5 +80,8 @@ export class RegisterComponent {
 
   get lastName(): FormControl {
     return this.form.get('lastName') as FormControl;
+  }
+  get username(): FormControl {
+    return this.form.get('username') as FormControl;
   }
 }

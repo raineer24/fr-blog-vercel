@@ -12,7 +12,7 @@ export class UsersComponent implements OnInit {
   pageEvent: PageEvent | undefined;
   dataSource: UserData | null = null;
   filterValue!: string;
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role'];
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role', 'username'];
   constructor(
     private userService: UserService,
     private router: Router,
