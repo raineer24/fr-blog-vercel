@@ -26,6 +26,6 @@ import { UsersComponent } from './components/users/users.component';
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
-  ],
+  ],exports: [UsersComponent],
 })
 export class PublicModule {}

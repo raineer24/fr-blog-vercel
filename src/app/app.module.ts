@@ -19,12 +19,14 @@ import { LoadingInterceptor } from './shared/loading/loading.interceptor';
 import { LoadingService } from './shared/loading/loading.service';
 import { ErrorInterceptor } from './guards/error.interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
+import { PublicModule } from './public/public.module';
 export function tokenGetter() {
   return localStorage.getItem('nestjs_chat_app');
 }
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    PublicModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

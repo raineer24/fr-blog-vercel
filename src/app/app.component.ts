@@ -5,7 +5,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { environment } from '../environments/environment';
 import { ChangeDetectionStrategy } from '@angular/core';
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
