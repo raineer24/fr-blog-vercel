@@ -8,14 +8,17 @@ import { AuthenticationService } from './services/authentication.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+[x: string]: any;
   title = 'fr-blog02';
+  isLoggedIn: boolean = false;
   constructor(
     private router: Router,
     private authService: AuthenticationService
   ) {}
 
-  navigateTo(value: any) {
-    this.router.navigate(['../', value]);
-    console.log('router', this.router.navigate(['/public/', value]));
+ 
+  getAuthorization(): any {
+    const token = localStorage.getItem("token");
+    return token; 
   }
 }

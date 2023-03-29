@@ -36,6 +36,13 @@ export class AuthenticationService {
   }
 
   appRoot = environment.appRoot;
+
+
+  getAuthorization(): any {
+    const token = localStorage.getItem("token");
+    return token; 
+  }
+  
   login(loginForm: LoginForm) {
     console.log(this.appRoot);
     return this.http
