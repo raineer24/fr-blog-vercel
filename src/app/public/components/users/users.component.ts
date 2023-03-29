@@ -13,6 +13,7 @@ export class UsersComponent implements OnInit {
   dataSource: UserData | null = null;
   filterValue!: string;
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role', 'username'];
+  im!: string;
   constructor(
     private userService: UserService,
     private router: Router,

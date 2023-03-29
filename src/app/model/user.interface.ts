@@ -7,6 +7,7 @@ export interface UserI {
   token?: string;
   role?: string;
   username?: string;
+  image?: string;
 }
 
 

@@ -1,12 +1,19 @@
-.example-icon {
-    padding: 0 14px;
-  }
+
+
+.left {
+  width:20%;
   
-  .example-spacer {
-    flex: 1 1 auto;
-  }
-  
-  .home-link:hover {
-    cursor: pointer;
-  }
-  
+  height: 100vh;
+  background: rgb(30, 34, 34);
+}
+.right {
+  width: 80%;
+  height: 100vh;
+  overflow: auto;
+  text-align: center;
+}
+
+.main {
+  width: 100%;
+  display: flex;
+}
