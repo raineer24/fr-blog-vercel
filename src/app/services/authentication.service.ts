@@ -12,6 +12,7 @@ import {
 import { environment } from '../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserI } from '../model/user.interface';
+import { Router } from '@angular/router';
 export interface LoginForm {
   email: string;
   password: string;
@@ -24,7 +25,11 @@ export class AuthenticationService {
   private userSubject: BehaviorSubject<UserI | null>;
   public user: Observable<UserI | null>;
   userInfo: any;
-  constructor(private http: HttpClient, private snackbar: MatSnackBar) {
+  constructor(
+    private http: HttpClient,
+    private snackbar: MatSnackBar,
+    private router: Router
+  ) {
     this.userSubject = new BehaviorSubject(
       JSON.parse(localStorage.getItem('user')!)
     );
@@ -36,6 +41,14 @@ export class AuthenticationService {
   }
 
   appRoot = environment.appRoot;
+
+  logout() {
+    // remove user from local storage and set current user to null
+    localStorage.removeItem('user');
+    this.userSubject.next(null);
+    this.router.navigate(['/public/login']);
+  }
+
   login(loginForm: LoginForm) {
     console.log(this.appRoot);
     return this.http

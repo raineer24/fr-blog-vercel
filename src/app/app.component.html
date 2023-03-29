@@ -1,20 +1,82 @@
-<app-loading></app-loading>
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>Rain &&</span>
-    <span class="example-spacer"></span>
-    <button mat-flat-button routerLink="/public/users">Users</button>
-   
-    <mat-form-field style="margin-left: 20px;" name="loginRegisterDropdown">
-      <mat-select placeholder="Login">
-        <mat-option (click)="navigateTo('login')">Login</mat-option>
-        <mat-option (click)="navigateTo('register')">Register</mat-option>
-        <!-- <mat-option (click)="navigateTo('update-profile')">Update Profile</mat-option> -->
-        <!-- <mat-option (click)="logout()">Logout</mat-option> -->
-      </mat-select>
-    </mat-form-field>
-  </mat-toolbar-row>
-</mat-toolbar>
+<div class="container">
+  <!-- CONTENEDOR PRINCIPAL-->
+  <br />
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+      <!-- <img src="assets/images/angular.png" width="30" height="30" alt=""> -->
+      Ner Blog
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" [routerLink]="['/inicio']">Inicio <span class="sr-only">(current)</span></a>
+          </li>
+         
+          </ul> -->
 
-<router-outlet></router-outlet>
+      <ul class="navbar-nav navbar-right" *ngIf="!user">
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/public/login']">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/public/register']">Register</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav navbar-right" *ngIf="user">
+        <li class="nav-item" *ngIf="!isBroken">
+          <img
+            [src]="getProfileImageUrl()"
+            alt="item.name"
+            width="30"
+            height="30"
+          />
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            {{ user.firstName + " " + user.lastName }}
+          </a>
+          <a
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+          </a>
+          <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" [routerLink]="['/crear-entrada']">Crear entrada</a>
+                  <a class="dropdown-item" [routerLink]="['/crear-categoria']">Crear categoria</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Mi perfil</a>
+                  <a class="dropdown-item"  [routerLink]="['/ajustes']">Ajustes</a>
+                  <a class="dropdown-item" [routerLink]="['/logout/1']">Cerrar sesion</a>
+                </div> -->
+        </li>
+        <button class="btn btn-link nav-item nav-link" (click)="logout()">Logout</button>
+      </ul>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
+</div>
