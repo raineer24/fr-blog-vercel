@@ -2,24 +2,26 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-
+import { AuthenticationService } from '../services/authentication.service';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router, private jwtService: JwtHelperService) {}
+  constructor(private router: Router, private jwtService: JwtHelperService,private authService: AuthenticationService) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
+      const user = this.authService.userValue;
+      if (user) {
+          // authorised so return true
+          return true;
+      }
 
-   if (this.jwtService.isTokenExpired()) {
-    this.router.navigate(['/public/login']);
-    return false;
-   } else {
-    return true;
-   }
+      // not logged in so redirect to login page with the return url
+      this.router.navigate(['/public/login'], { queryParams: { returnUrl: state.url }});
+      return false;
   }
   
 }
