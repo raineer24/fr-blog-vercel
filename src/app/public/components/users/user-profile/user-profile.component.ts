@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { map, switchMap } from 'rxjs';
 import { Subscription, Observable } from 'rxjs';
 import { UserI } from 'src/app/model/user.interface';
 import { UserService } from 'src/app/services/user.service';
@@ -18,5 +18,11 @@ export class UserProfileComponent {
     @Inject(WINDOW) private window: Window
   ) {}
 
-  private userId$: Observable<number> = th;
+  private userId$: Observable<number> = this.activatedRoute.params.pipe(
+    map((params: Params) => parseInt(params['id']))
+  );
+
+  user$: Observable<UserI> = this.userId$.pipe(
+    switchMap((userId: number) => this.userService.findOne(userId))
+  );
 }
