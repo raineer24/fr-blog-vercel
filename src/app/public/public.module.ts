@@ -12,8 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { UsersComponent } from './components/users/users/users.component';
-import { UserProfileComponent } from './components/users/user-profile/user-profile.component';
-
+import { UserProfileComponent } from './components/users/user-profile/user-profile.component'
 @NgModule({
   declarations: [
     LoginComponent,
