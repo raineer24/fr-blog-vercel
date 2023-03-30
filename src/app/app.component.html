@@ -1,4 +1,5 @@
 <div class="container">
+  <app-loading></app-loading>
   <!-- CONTENEDOR PRINCIPAL-->
   <br />
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -20,11 +21,10 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" [routerLink]="['/public/users']">Users </a>
-          </li>
-         
-          </ul>
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/public/users']">Users </a>
+        </li>
+      </ul>
 
       <ul class="navbar-nav navbar-right" *ngIf="!user">
         <li class="nav-item active">
@@ -74,7 +74,9 @@
                   <a class="dropdown-item" [routerLink]="['/logout/1']">Cerrar sesion</a>
                 </div> -->
         </li>
-        <button class="btn btn-link nav-item nav-link" (click)="logout()">Logout</button>
+        <button class="btn btn-link nav-item nav-link" (click)="logout()">
+          Logout
+        </button>
       </ul>
     </div>
   </nav>

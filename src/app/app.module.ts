@@ -26,7 +26,6 @@ export function tokenGetter() {
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    PublicModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
