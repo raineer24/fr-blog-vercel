@@ -34,9 +34,10 @@
           >
         </mat-form-field>
   
-        <mat-hint>Please fill out all needed information</mat-hint>
+     
   
         <mat-card-content appearance="outline">
+          <mat-hint>Please fill out all needed information</mat-hint><br/>
           <button
             class="login"
             mat-raised-button
@@ -44,7 +45,7 @@
             [disabled]="!form.valid"
           >
             Login</button
-          >Don't have an account?<a [routerLink]="['/public/register']"
+          ><br/>Don't have an account?<a [routerLink]="['/public/register']"
             >Sign Up</a
           >
         </mat-card-content>
