@@ -13,7 +13,14 @@ export class UsersComponent implements OnInit {
   pageEvent: PageEvent | undefined;
   dataSource: UserData | null = null;
   filterValue!: string;
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role', 'username'];
+  displayedColumns: string[] = [
+    'id',
+    'firstName',
+    'lastName',
+    'email',
+    'role',
+    'username',
+  ];
   im!: string;
   constructor(
     private userService: UserService,
@@ -23,6 +30,10 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.initDataSource();
+  }
+
+  navigateToProfile(id: string) {
+    this.router.navigate(['./' + id], { relativeTo: this.activatedRoute });
   }
   initDataSource() {
     this.userService
