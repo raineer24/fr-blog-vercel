@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserData, UserService } from '../../../services/user.service';
 import { map, tap } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
+import { ChangeDetectionStrategy } from '@angular/core';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',

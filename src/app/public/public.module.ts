@@ -12,9 +12,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { UsersComponent } from './components/users/users.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, UsersComponent],
+  declarations: [LoginComponent, RegisterComponent, UsersComponent, UserProfileComponent],
   imports: [
     CommonModule,
     PublicRoutingModule,
