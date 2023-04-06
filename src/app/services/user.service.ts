@@ -24,10 +24,18 @@ export class UserService {
   appRoot = environment.appRoot;
   constructor(private http: HttpClient) {}
 
+  findOne(id: number): Observable<UserI> {
+    return this.http.get(`${this.appRoot}/api/users/` + id).pipe(
+      map((user: UserI) => {
+        console.log('find One' ,user)
+        return user;
+      })
+    );
+  }
+
   findAll(page: number, size: number): Observable<UserData> {
-    console.log('approot', `${this.appRoot}/api/users/pages?`);
     const url = `${this.appRoot}/api/users/pages?`;
-    console.log('url', url);
+
     let params = new HttpParams();
 
     params = params.append('page', String(page));
@@ -35,7 +43,6 @@ export class UserService {
 
     return this.http.get(url, { params }).pipe(
       map((userData: any) => {
-        console.log('userdata', userData);
         return userData;
       }),
       catchError((err) => throwError(err))
@@ -53,7 +60,7 @@ export class UserService {
     params = params.append('page', String(page));
     params = params.append('size', String(size));
     params = params.append('search', String(search));
-      return this.http.get(url, { params }).pipe(
+    return this.http.get(url, { params }).pipe(
       map((userData: any) => {
         console.log('userdata', userData);
         return userData;

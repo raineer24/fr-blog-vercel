@@ -8,6 +8,5 @@ export interface UserI {
   role?: string;
   username?: string;
   image?: string;
+  image_id?: string;
 }
-
-

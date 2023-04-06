@@ -58,9 +58,10 @@ export class AuthenticationService {
       })
       .pipe(
         map((userData) => {
+          console.log('usedata', userData);
           localStorage.setItem('nestjs_chat_app', userData.access_token);
-          localStorage.setItem('user', JSON.stringify(userData.userData));
-          this.userSubject.next(userData.userData);
+          localStorage.setItem('user', JSON.stringify(userData));
+          this.userSubject.next(userData);
           return userData;
         })
       );
