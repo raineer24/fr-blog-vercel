@@ -13,7 +13,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { UsersComponent } from './components/users/users/users.component';
 import { UserProfileComponent } from './components/users/user-profile/user-profile.component';
-import { UpdateUserProfileComponent } from './components/users/components/update-user-profile/update-user-profile.component'
+import { UpdateUserProfileComponent } from './components/users/update-user-profile/update-user-profile.component';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 @NgModule({
   declarations: [
     LoginComponent,
@@ -33,6 +34,10 @@ import { UpdateUserProfileComponent } from './components/users/components/update
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
+  ],
+  providers: [
+    JwtHelperService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
   ],
 })
 export class PublicModule {}
