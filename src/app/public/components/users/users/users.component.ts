@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserData, UserService } from '../../../services/user.service';
+import { UserData, UserService } from '../../../../services/user.service';
 import { map, tap } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
+import { ChangeDetectionStrategy } from '@angular/core';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -12,7 +13,14 @@ export class UsersComponent implements OnInit {
   pageEvent: PageEvent | undefined;
   dataSource: UserData | null = null;
   filterValue!: string;
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'role', 'username'];
+  displayedColumns: string[] = [
+    'id',
+    'firstName',
+    'lastName',
+    'email',
+    'role',
+    'username',
+  ];
   im!: string;
   constructor(
     private userService: UserService,
@@ -22,6 +30,10 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.initDataSource();
+  }
+
+  navigateToProfile(id: string) {
+    this.router.navigate(['./' + id], { relativeTo: this.activatedRoute });
   }
   initDataSource() {
     this.userService

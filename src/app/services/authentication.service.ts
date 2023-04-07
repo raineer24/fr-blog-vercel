@@ -13,10 +13,13 @@ import { environment } from '../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserI } from '../model/user.interface';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 export interface LoginForm {
   email: string;
   password: string;
 }
+
+export const JWT_NAME = 'nestjs_chat_app';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +31,8 @@ export class AuthenticationService {
   constructor(
     private http: HttpClient,
     private snackbar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private jwtHelper: JwtHelperService
   ) {
     this.userSubject = new BehaviorSubject(
       JSON.parse(localStorage.getItem('user')!)
@@ -58,9 +62,10 @@ export class AuthenticationService {
       })
       .pipe(
         map((userData) => {
+          console.log('usedata', userData);
           localStorage.setItem('nestjs_chat_app', userData.access_token);
-          localStorage.setItem('user', JSON.stringify(userData.userData));
-          this.userSubject.next(userData.userData);
+          localStorage.setItem('user', JSON.stringify(userData));
+          this.userSubject.next(userData);
           return userData;
         })
       );
@@ -97,5 +102,11 @@ export class AuthenticationService {
           return throwError(e);
         })
       );
+  }
+
+  isAuthenticated(): boolean {
+    const token: any = localStorage.getItem(JWT_NAME);
+    console.log('token', token);
+    return !this.jwtHelper.isTokenExpired(token);
   }
 }

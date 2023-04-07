@@ -18,8 +18,9 @@ import { SharedModule } from './shared/shared.module';
 import { LoadingInterceptor } from './shared/loading/loading.interceptor';
 import { LoadingService } from './shared/loading/loading.service';
 import { ErrorInterceptor } from './guards/error.interceptor';
-import { JwtModule } from '@auth0/angular-jwt';
-import { PublicModule } from './public/public.module';
+import { JwtHelperService ,JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { WINDOW_PROVIDERS } from '../window.token';
+import {  JwtInterceptor, } from './interceptors/jwt.interceptor';
 export function tokenGetter() {
   return localStorage.getItem('nestjs_chat_app');
 }
@@ -49,6 +50,14 @@ export function tokenGetter() {
     }),
   ],
   providers: [
+    JwtHelperService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
+    WINDOW_PROVIDERS,
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     LoadingService,

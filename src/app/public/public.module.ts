@@ -11,10 +11,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { UsersComponent } from './components/users/users.component';
-
+import { UsersComponent } from './components/users/users/users.component';
+import { UserProfileComponent } from './components/users/user-profile/user-profile.component';
+import { UpdateUserProfileComponent } from './components/users/update-user-profile/update-user-profile.component';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from '../interceptors/jwt.interceptor';
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, UsersComponent],
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+    UsersComponent,
+    UserProfileComponent,
+    UpdateUserProfileComponent,
+  ],
   imports: [
     CommonModule,
     PublicRoutingModule,
@@ -26,6 +36,6 @@ import { UsersComponent } from './components/users/users.component';
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
-  ],exports: [UsersComponent],
+  ],
 })
 export class PublicModule {}

@@ -30,6 +30,9 @@
               <mat-error *ngIf="firstName.touched && firstName.hasError('required')"
                 >First name is required</mat-error
               >
+              <mat-error *ngIf="firstName.touched && firstName.hasError('pattern')">
+                First Name must not contain numbers and special characters!
+              </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">
               <input
