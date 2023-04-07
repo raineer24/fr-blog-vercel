@@ -14,8 +14,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { UsersComponent } from './components/users/users/users.component';
 import { UserProfileComponent } from './components/users/user-profile/user-profile.component';
 import { UpdateUserProfileComponent } from './components/users/update-user-profile/update-user-profile.component';
-import { JwtHelperService, JwtInterceptor, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from '../interceptors/jwt.interceptor';
 @NgModule({
   declarations: [
     LoginComponent,
@@ -35,15 +36,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
-  ],
-  providers: [
-    JwtHelperService,
-    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
-      multi: true
-    }
   ],
 })
 export class PublicModule {}
