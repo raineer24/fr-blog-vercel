@@ -12,7 +12,6 @@ import { Inject } from '@angular/core';
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
-
   origin = this.window.location.origin;
   // user$: UserI | null = null;
   user$: UserI | null = null;
@@ -40,6 +39,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     });
   }
 
+ 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }

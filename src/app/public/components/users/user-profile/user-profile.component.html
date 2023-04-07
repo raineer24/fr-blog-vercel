@@ -1,16 +1,23 @@
 <div *ngIf="user$" class="main-div">
-    <!-- <div *ngFor="let user of user$" class="main-div"> -->
+  <!-- <div *ngFor="let user of user$" class="main-div"> -->
   <mat-card class="class">
     <mat-card-header>
-      <div mat-card-avatar>
-        <img src="https://res.cloudinary.com/dwsbpkgvr/image/upload/v1680768742/{{user$.image_id}}" alt="" />
+      <div mat-card-avatar *ngIf="user$.image_id != null">
+        <img
+          src="https://res.cloudinary.com/dwsbpkgvr/image/upload/v1680768742/{{
+            user$.image_id
+          }}"
+        
+          alt=""
+          class="header-image"
+        />
       </div>
-      <mat-card-title>{{user$.firstName}}</mat-card-title>
-      <mat-card-subtitle>{{user$.email}}</mat-card-subtitle>
+      <mat-card-title>{{ user$.firstName }}</mat-card-title>
+      <mat-card-subtitle>{{ user$.email }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>Username: {{user$.username}}</p>
-      <p>Role: {{user$.role}}</p>
+      <p>Username: {{ user$.username }}</p>
+      <p>Role: {{ user$.role }}</p>
       <!-- <h2>Blog entries of {{user$.username}}</h2> -->
     </mat-card-content>
   </mat-card>
