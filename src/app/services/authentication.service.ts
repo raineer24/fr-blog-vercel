@@ -8,6 +8,7 @@ import {
   Observable,
   throwError,
   BehaviorSubject,
+  of,
 } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -27,6 +28,7 @@ export const JWT_NAME = 'nestjs_chat_app';
 export class AuthenticationService {
   private userSubject: BehaviorSubject<UserI | null>;
   public user: Observable<UserI | null>;
+  jwt: string | null = null;
   userInfo: any;
   constructor(
     private http: HttpClient,
@@ -49,6 +51,7 @@ export class AuthenticationService {
   logout() {
     // remove user from local storage and set current user to null
     localStorage.removeItem('user');
+    localStorage.removeItem('nestjs_chat_app');
     this.userSubject.next(null);
     this.router.navigate(['/public/login']);
   }
@@ -108,5 +111,14 @@ export class AuthenticationService {
     const token: any = localStorage.getItem(JWT_NAME);
     console.log('token', token);
     return !this.jwtHelper.isTokenExpired(token);
+  }
+  getUserId(): Observable<number> {
+    return of(localStorage.getItem(JWT_NAME)).pipe(
+      switchMap((jwt: string | null) =>
+        of(this.jwtHelper.decodeToken(jwt!)).pipe(
+          tap((jwt) => console.log('token', jwt!)),
+          map((jwt: any) => jwt!['sub']))
+      )
+    );
   }
 }
