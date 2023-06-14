@@ -49,6 +49,12 @@ export class UpdateUserProfileComponent implements OnInit {
       .subscribe();
   }
 
+  onClick() {
+
+  }
+
+  uploadFile() {}
+
   update() {
     this.userService.updateOne(this.form.getRawValue()).subscribe();
   }
