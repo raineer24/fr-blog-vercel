@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { LoadingInterceptor } from './shared/loading/loading.interceptor';
@@ -41,6 +42,7 @@ export function tokenGetter() {
     MatSnackBarModule,
     HttpClientModule,
     MatToolbarModule,
+ 
     SharedModule,
     JwtModule.forRoot({
       config: {

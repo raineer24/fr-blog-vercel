@@ -17,6 +17,8 @@ import { UpdateUserProfileComponent } from './components/users/update-user-profi
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from '../interceptors/jwt.interceptor';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
     LoginComponent,
@@ -36,6 +38,8 @@ import { JwtInterceptor } from '../interceptors/jwt.interceptor';
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
+    MatProgressBarModule,
+    MatIconModule,
   ],
 })
 export class PublicModule {}

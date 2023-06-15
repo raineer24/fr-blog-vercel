@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { switchMap, tap, map, catchError } from 'rxjs/operators';
@@ -8,6 +8,8 @@ import {
   HttpEvent,
   HttpErrorResponse,
 } from '@angular/common/http';
+import { WINDOW } from 'src/window.token';
+import { Inject } from '@angular/core';
 import { of } from 'rxjs';
 import { UserI } from 'src/app/model/user.interface';
 export interface File {
@@ -31,11 +33,14 @@ export class UpdateUserProfileComponent implements OnInit {
     progress: 0,
   };
 
+  origin = this.window.location.origin;
+
   form!: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
-    private userService: UserService
+    private userService: UserService,
+    @Inject(WINDOW) private window: Window
   ) {}
 
   ngOnInit(): void {
@@ -43,7 +48,7 @@ export class UpdateUserProfileComponent implements OnInit {
       id: [{ value: null, disabled: true }, [Validators.required]],
       firstName: [null, [Validators.required]],
       username: [null, [Validators.required]],
-      profileImage: [null]
+      profileImage: [null],
     });
 
     this.authService
@@ -56,6 +61,7 @@ export class UpdateUserProfileComponent implements OnInit {
                 id: user.id,
                 firstName: user.firstName,
                 username: user.username,
+                profileImage: user.profileImage,
               });
             })
           )
@@ -64,11 +70,53 @@ export class UpdateUserProfileComponent implements OnInit {
       .subscribe();
   }
 
+  get profileImg(): FormControl {
+    return this.form.get('profileImage') as FormControl;
+  }
   onClick() {
     const fileInput = this.fileUpload.nativeElement;
+    fileInput.click();
+    fileInput.onchange = () => {
+      this.file = {
+        data: fileInput.files[0],
+        inProgress: false,
+        progress: 0,
+      };
+    };
+    this.fileUpload.nativeElement.value = '';
+    this.uploadFile();
   }
 
-  uploadFile() {}
+  uploadFile() {
+    const formData = new FormData();
+    formData.append('file', this.file.data);
+    this.file.inProgress = true;
+
+    this.userService
+      .uploadProfileImage(formData)
+      .pipe(
+        map((event) => {
+          switch (event.type) {
+            case HttpEventType.UploadProgress:
+              this.file.progress = Math.round(
+                (event.loaded * 100) / event.total
+              );
+              break;
+            case HttpEventType.Response:
+              return event;
+          }
+        }),
+        catchError((error: HttpErrorResponse) => {
+          this.file.inProgress = false;
+          return of('Upload failed');
+        })
+      )
+      .subscribe((event: any) => {
+        if (typeof event === 'object') {
+          this.form.patchValue({ profileImage: event.profileImage });
+        }
+      });
+  }
 
   update() {
     this.userService.updateOne(this.form.getRawValue()).subscribe();
