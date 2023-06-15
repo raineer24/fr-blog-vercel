@@ -10,6 +10,11 @@ import {
 } from '@angular/common/http';
 import { of } from 'rxjs';
 import { UserI } from 'src/app/model/user.interface';
+export interface File {
+  data: any;
+  progress: number;
+  inProgress: boolean;
+}
 
 @Component({
   selector: 'app-update-user-profile',
@@ -17,6 +22,15 @@ import { UserI } from 'src/app/model/user.interface';
   styleUrls: ['./update-user-profile.component.scss'],
 })
 export class UpdateUserProfileComponent implements OnInit {
+  @ViewChild('fileUpload', { static: false })
+  fileUpload!: ElementRef;
+
+  file: File = {
+    data: null,
+    inProgress: false,
+    progress: 0,
+  };
+
   form!: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
@@ -29,6 +43,7 @@ export class UpdateUserProfileComponent implements OnInit {
       id: [{ value: null, disabled: true }, [Validators.required]],
       firstName: [null, [Validators.required]],
       username: [null, [Validators.required]],
+      profileImage: [null]
     });
 
     this.authService
@@ -50,7 +65,7 @@ export class UpdateUserProfileComponent implements OnInit {
   }
 
   onClick() {
-
+    const fileInput = this.fileUpload.nativeElement;
   }
 
   uploadFile() {}
