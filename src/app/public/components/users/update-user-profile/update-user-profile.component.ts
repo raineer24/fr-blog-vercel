@@ -41,9 +41,10 @@ export class UpdateUserProfileComponent implements OnInit {
     private authService: AuthenticationService,
     private userService: UserService,
     @Inject(WINDOW) private window: Window
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    console.log('origin', this.origin);
     this.form = this.formBuilder.group({
       id: [{ value: null, disabled: true }, [Validators.required]],
       firstName: [null, [Validators.required]],
@@ -75,6 +76,7 @@ export class UpdateUserProfileComponent implements OnInit {
   }
   onClick() {
     const fileInput = this.fileUpload.nativeElement;
+    console.log('fileInput', fileInput);
     fileInput.click();
     fileInput.onchange = () => {
       this.file = {
@@ -83,6 +85,7 @@ export class UpdateUserProfileComponent implements OnInit {
         progress: 0,
       };
     };
+    console.log('this file', this.file);
     this.fileUpload.nativeElement.value = '';
     this.uploadFile();
   }
