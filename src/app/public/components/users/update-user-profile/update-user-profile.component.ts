@@ -49,7 +49,7 @@ export class UpdateUserProfileComponent implements OnInit {
       id: [{ value: null, disabled: true }, [Validators.required]],
       firstName: [null, [Validators.required]],
       username: [null, [Validators.required]],
-      profileImage: [null],
+      image_url: [null],
     });
 
     this.authService
@@ -62,7 +62,7 @@ export class UpdateUserProfileComponent implements OnInit {
                 id: user.id,
                 firstName: user.firstName,
                 username: user.username,
-                profileImage: user.profileImage,
+                image_url: user.image_url,
               });
             })
           )
@@ -116,7 +116,7 @@ export class UpdateUserProfileComponent implements OnInit {
       )
       .subscribe((event: any) => {
         if (typeof event === 'object') {
-          this.form.patchValue({ profileImage: event.profileImage });
+          this.form.patchValue({ image_url: event.image_url });
         }
       });
   }
