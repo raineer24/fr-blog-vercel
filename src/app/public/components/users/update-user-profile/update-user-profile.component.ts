@@ -29,7 +29,7 @@ export interface File {
   styleUrls: ['./update-user-profile.component.scss'],
 })
 export class UpdateUserProfileComponent implements OnInit {
-  @ViewChild('fileUpload', { static: false })
+  @ViewChild('fileUpload') fileUpload!: ElementRef;
   fileUpload!: ElementRef;
  
   file: File = {
@@ -80,7 +80,7 @@ export class UpdateUserProfileComponent implements OnInit {
   get profileImg(): FormControl {
     return this.form.get('profileImage') as FormControl;
   }
-  onClick(event: any) {
+  onClick(event: Event) {
     this.file = event.target.files[0];
     console.log('FILE',this.file);
     const fileInput = this.fileUpload.nativeElement;
