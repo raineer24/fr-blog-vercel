@@ -109,14 +109,14 @@ export class AuthenticationService {
 
   isAuthenticated(): boolean {
     const token: any = localStorage.getItem(JWT_NAME);
-    console.log('token', token);
+   // console.log('token', token);
     return !this.jwtHelper.isTokenExpired(token);
   }
   getUserId(): Observable<number> {
     return of(localStorage.getItem(JWT_NAME)).pipe(
       switchMap((jwt: string | null) =>
         of(this.jwtHelper.decodeToken(jwt!)).pipe(
-          tap((jwt) => console.log('token', jwt!)),
+         
           map((jwt: any) => jwt!['sub']))
       )
     );
