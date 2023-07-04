@@ -11,13 +11,13 @@
               </li>
             </ul>
           </mat-card-content>
-          <mat-card-actions>
-            <button mat-button color="warn" (change)="onClick($event)">
+          <!-- <mat-card-actions>
+            <button mat-button color="warn">
               <mat-icon>cloud-upload</mat-icon>
             </button>
-          </mat-card-actions>
+          </mat-card-actions> -->
         </mat-card>
-        <input type="file" #fileUpload id="fileUpload" name="fileUpload" accept="image/*" style="display:none;">
+        <input type="file"  (change)="onClick()" #fileUpload id="fileUpload" name="fileUpload" accept="image/*" >
       </div>
 
       <div class="container" style="width: 80%;">
