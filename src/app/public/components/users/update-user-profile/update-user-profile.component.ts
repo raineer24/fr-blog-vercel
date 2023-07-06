@@ -15,13 +15,13 @@ import {
 } from '@angular/common/http';
 import { WINDOW } from 'src/window.token';
 import { Inject } from '@angular/core';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { UserI } from 'src/app/model/user.interface';
-export interface File {
-  data: any;
-  progress: number;
-  inProgress: boolean;
-}
+// export interface File {
+//   data: any;
+//   progress: number;
+//   inProgress: boolean;
+// }
 
 @Component({
   selector: 'app-update-user-profile',
@@ -29,14 +29,11 @@ export interface File {
   styleUrls: ['./update-user-profile.component.scss'],
 })
 export class UpdateUserProfileComponent implements OnInit {
-  @ViewChild("fileUpload", {static: false}) fileUpload!: ElementRef;
+  @ViewChild('fileUpload', { static: false }) fileUpload!: ElementRef;
   //fileUpload!: ElementRef;
- 
-  file: File = {
-    data: null,
-    inProgress: false,
-    progress: 0,
-  };
+
+  file!: File;
+  private fileEvent: any;
 
   origin = this.window.location.origin;
 
@@ -80,54 +77,60 @@ export class UpdateUserProfileComponent implements OnInit {
   get profileImg(): FormControl {
     return this.form.get('profileImage') as FormControl;
   }
-  onClick() {
-   // this.file = event.target.files[0];
-    //console.log('FILE',this.file);
+  onClick(event: Event) {
+    this.fileEvent = event;
+    this.file = this.fileEvent.target.files[0];
+    console.log('FILE', this.file);
+
     // const input = event.target as HTMLInputElement;
     // if (input.files === null || input.files.length === 0) {
     //   return;
     // }
     // const file = input.files[0];
     //console.log('input files [0]', file);
-    const fileInput = this.fileUpload.nativeElement;
-    console.log('fileInput', fileInput);
-    fileInput.click();
-    fileInput.onchange = () => {
-      this.file = {
-        data: fileInput.files[0],
-        inProgress: false,
-        progress: 0,
-      };
-    };
+    // const fileInput = this.fileUpload.nativeElement;
+    // console.log('fileInput', fileInput);
+    // fileInput.click();
+    // fileInput.onchange = () => {
+    //   this.file = {
+    //     data: fileInput.files[0],
+    //     inProgress: false,
+    //     progress: 0,
+    //   };
+    // };
     console.log('this file', this.file);
     this.fileUpload.nativeElement.value = '';
     this.uploadFile();
   }
 
   uploadFile() {
-    const formData = new FormData();
-    console.log('this.file.data', this.file.data);
-    formData.append('file', this.file.data);
-    this.file.inProgress = true;
-
+    const formData: any = new FormData();
+    console.log('this.file.data', this.file);
+    formData.append('image', this.file);
+    // this.file.inProgress = true;
+    console.log('formdatas', formData);
+    formData.forEach((value: string, key: string) => {
+      console.log(key + ' ' + value);
+    });
     this.userService
       .uploadProfileImage(formData)
       .pipe(
         map((event) => {
           console.log('map uploadprofile img');
-          switch (event.type) {
-            case HttpEventType.UploadProgress:
-              this.file.progress = Math.round(
-                (event.loaded * 100) / event.total
-              );
-              break;
-            case HttpEventType.Response:
-              return event;
-          }
+          // switch (event.type) {
+          //   case HttpEventType.UploadProgress:
+          //     this.file.progress = Math.round(
+          //       (event.loaded * 100) / event.total
+          //     );
+          //     break;
+          //   case HttpEventType.Response:
+          //     return event;
+          // }
+          return event;
         }),
-        catchError((error: HttpErrorResponse) => {
-          this.file.inProgress = false;
-          return of('Upload failed');
+        catchError((err) => {
+          console.log('err', err);
+          return throwError(err);
         })
       )
       .subscribe((event: any) => {

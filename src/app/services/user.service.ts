@@ -58,12 +58,10 @@ export class UserService {
     );
   }
 
-  uploadProfileImage(formData: FormData): Observable<any> {
+  uploadProfileImage(file: any): Observable<any> {
     console.log('upload profile inmage');
-    return this.http.post<FormData>(`${this.appRoot}/api/users/upload`, formData, {
-      reportProgress: true,
-      observe: 'events'
-    })
+    console.log('file sevice', file);
+    return this.http.post<any>(`${this.appRoot}/api/users/upload`, file);
   }
 
   paginateByName(
