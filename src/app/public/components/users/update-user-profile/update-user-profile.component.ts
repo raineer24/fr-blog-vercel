@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
-import { switchMap, tap, map, catchError } from 'rxjs/operators';
+import { switchMap, tap, map, catchError, every } from 'rxjs/operators';
 import {
   HttpEventType,
   HttpEvent,
@@ -22,6 +22,12 @@ import { UserI } from 'src/app/model/user.interface';
 //   progress: number;
 //   inProgress: boolean;
 // }
+
+export interface File {
+  data: any;
+  progress: number;
+  inProgress: boolean;
+}
 
 @Component({
   selector: 'app-update-user-profile',
@@ -117,6 +123,15 @@ export class UpdateUserProfileComponent implements OnInit {
       .pipe(
         map((event) => {
           console.log('map uploadprofile img');
+          console.log('this file', this.file);
+          console.log('event', event);
+          if (event.type === HttpEventType.Response) {
+            console.log('Upload complete');
+        }
+        if (event.type === HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * event.loaded / event.total);
+          console.log('Progress ' + percentDone + '%');
+      } 
           // switch (event.type) {
           //   case HttpEventType.UploadProgress:
           //     this.file.progress = Math.round(
