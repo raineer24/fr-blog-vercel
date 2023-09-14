@@ -111,19 +111,7 @@ export class UpdateUserProfileComponent implements OnInit {
       .uploadProfileImage(formData)
       .pipe(
         map((event) => {
-          console.log('map uploadprofile img');
-          console.log('this file', this.file);
-          console.log('event', event);
-          // if (event.type === HttpEventType.Response) {
-          //   console.log('Upload complete');
-          // }
-          // if (event.type === HttpEventType.UploadProgress) {
-          //   console.log('upload prgress!');
-          //   const percentDone = Math.round((100 * event.loaded) / event.total);
-          //   console.log('Progress ' + percentDone + '%');
-          // }
           if (event.type === HttpEventType.UploadProgress) {
-            // This is an upload progress event. Compute and show the % done:
             const percentDone = Math.round((100 * event.loaded) / event.total);
             console.log(`File is ${percentDone}% uploaded.`);
           } else if (event instanceof HttpResponse) {
