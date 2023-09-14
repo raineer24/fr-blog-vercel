@@ -4,20 +4,20 @@
       <div style="width: 80%">
         <mat-card>
           <mat-card-content>
-            <!-- <img *ngIf="profileImg" src="{{origin}}/api/users/profile-image/{{profileImg}}"> -->
-            <!-- <ul>
+            <img *ngIf="profileImg" src="{{origin}}/api/users/profile-image/{{profileImg}}">
+            <ul>
               <li>
                 <mat-progress-bar [value]="file.progress"></mat-progress-bar>
               </li>
-            </ul> -->
+            </ul>
           </mat-card-content>
-          <!-- <mat-card-actions>
-            <button mat-button color="warn">
+          <mat-card-actions>
+            <button mat-button color="warn"  (click)="onClick()">
               <mat-icon>cloud-upload</mat-icon>
             </button>
-          </mat-card-actions> -->
+          </mat-card-actions>
         </mat-card>
-        <input type="file"  (change)="onClick($event)" #fileUpload id="fileUpload" name="fileUpload" accept="image/*" >
+        <input type="file"   #fileUpload id="fileUpload" name="fileUpload" accept="image/*" style="display:none;">
       </div>
 
       <div class="container" style="width: 80%;">

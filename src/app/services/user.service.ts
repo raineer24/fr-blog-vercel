@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { UserI } from '../model/user.interface';
@@ -59,9 +59,11 @@ export class UserService {
   }
 
   uploadProfileImage(formData: FormData): Observable<any> {
+      const headers = new HttpHeaders({ 'ngsw-bypass': ''});
       return this.http.post<FormData>(`${this.appRoot}/api/users/upload`, formData , {
       reportProgress: true,
-      observe: 'events'
+      observe: 'events',
+     
     });
   }
 

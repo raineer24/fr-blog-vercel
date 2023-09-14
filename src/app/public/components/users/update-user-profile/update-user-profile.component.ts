@@ -39,7 +39,12 @@ export class UpdateUserProfileComponent implements OnInit {
   @ViewChild('fileUpload', { static: false }) fileUpload!: ElementRef;
   //fileUpload!: ElementRef;
 
-  file!: File;
+  file: File = {
+    data: null,
+    inProgress: false,
+    progress: 0,
+  };
+
   private fileEvent: any;
 
   origin = this.window.location.origin;
@@ -84,17 +89,22 @@ export class UpdateUserProfileComponent implements OnInit {
   get profileImg(): FormControl {
     return this.form.get('profileImage') as FormControl;
   }
-  onClick(event: Event) {
-    this.fileEvent = event;
-    // this.file = this.fileEvent.target.files[0];
-    console.log('FILE', this.file);
+  onClick() {
+    //  this.fileEvent = event;
 
-    this.file = {
-      data: this.fileEvent.target.files[0],
-      inProgress: false,
-      progress: 0,
+    console.log('FILE', this.file);
+    const fileInput = this.fileUpload.nativeElement;
+    fileInput.click();
+    fileInput.onchange = () => {
+      this.file = {
+        data: fileInput.files[0],
+        inProgress: false,
+        progress: 0,
+      };
+      this.fileUpload.nativeElement.value = '';
+
+      this.uploadFile();
     };
-    this.uploadFile();
   }
 
   uploadFile() {
@@ -102,32 +112,37 @@ export class UpdateUserProfileComponent implements OnInit {
     console.log('this.file.data', this.file);
     formData.append('image', this.file.data);
     // this.file.inProgress = true;
-    console.log('formdatas', formData);
-    this.file.inProgress = true;
-    formData.forEach((value: string, key: string) => {
-      console.log(key + ' ' + value);
-    });
+       this.file.inProgress = true;
+
     this.userService
       .uploadProfileImage(formData)
       .pipe(
         map((event) => {
-          // if (event.type === HttpEventType.UploadProgress) {
-          //   const percentDone = Math.round((100 * event.loaded) / event.total);
-          //   console.log(`File is ${percentDone}% uploaded.`);
-          // } else if (event instanceof HttpResponse) {
-          //   console.log('File is completely uploaded!');
-          //   console.log(event.body);
-          // }
+          console.log('upload img', this.file.progress);
+          if (event.type === HttpEventType.UploadProgress) {
+            console.log('100 hunderd', this.file.progress);
+            if (this.file.progress == 100) {
+              console.log('100 hunderd');
+            }
+            const percentDone = Math.round((event.loaded / event.total) * 100);
+            console.log(`File is ${percentDone}% uploaded.`);
+          } else if (event instanceof HttpResponse) {
+            console.log('File is completely uploaded!');
+            console.log(event.body);
+          }
           switch (event.type) {
             case HttpEventType.UploadProgress:
               this.file.progress = Math.round(
                 (event.loaded * 100) / event.total
               );
+              console.log('file.progress', this.file.progress);
+              console.log('file.progress');
               break;
             case HttpEventType.Response:
               return event;
           }
-         // return event;
+
+          // return event;
         }),
         catchError((error: HttpErrorResponse) => {
           this.file.inProgress = false;
