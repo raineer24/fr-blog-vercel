@@ -12,6 +12,7 @@ import {
   HttpEventType,
   HttpEvent,
   HttpErrorResponse,
+  HttpResponse,
 } from '@angular/common/http';
 import { WINDOW } from 'src/window.token';
 import { Inject } from '@angular/core';
@@ -125,13 +126,22 @@ export class UpdateUserProfileComponent implements OnInit {
           console.log('map uploadprofile img');
           console.log('this file', this.file);
           console.log('event', event);
-          if (event.type === HttpEventType.Response) {
-            console.log('Upload complete');
-        }
-        if (event.type === HttpEventType.UploadProgress) {
-          const percentDone = Math.round(100 * event.loaded / event.total);
-          console.log('Progress ' + percentDone + '%');
-      } 
+          // if (event.type === HttpEventType.Response) {
+          //   console.log('Upload complete');
+          // }
+          // if (event.type === HttpEventType.UploadProgress) {
+          //   console.log('upload prgress!');
+          //   const percentDone = Math.round((100 * event.loaded) / event.total);
+          //   console.log('Progress ' + percentDone + '%');
+          // }
+          if (event.type === HttpEventType.UploadProgress) {
+            // This is an upload progress event. Compute and show the % done:
+            const percentDone = Math.round((100 * event.loaded) / event.total);
+            console.log(`File is ${percentDone}% uploaded.`);
+          } else if (event instanceof HttpResponse) {
+            console.log('File is completely uploaded!');
+            console.log(event.body);
+          }
           // switch (event.type) {
           //   case HttpEventType.UploadProgress:
           //     this.file.progress = Math.round(

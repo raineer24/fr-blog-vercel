@@ -59,9 +59,7 @@ export class UserService {
   }
 
   uploadProfileImage(formData: FormData): Observable<any> {
-    console.log('upload profile inmage');
-    console.log('file sevice', formData);
-    return this.http.post<FormData>(`${this.appRoot}/api/users/upload`, formData , {
+      return this.http.post<FormData>(`${this.appRoot}/api/users/upload`, formData , {
       reportProgress: true,
       observe: 'events'
     });
