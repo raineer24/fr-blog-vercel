@@ -111,32 +111,32 @@ export class UpdateUserProfileComponent implements OnInit {
       .uploadProfileImage(formData)
       .pipe(
         map((event) => {
-          if (event.type === HttpEventType.UploadProgress) {
-            const percentDone = Math.round((100 * event.loaded) / event.total);
-            console.log(`File is ${percentDone}% uploaded.`);
-          } else if (event instanceof HttpResponse) {
-            console.log('File is completely uploaded!');
-            console.log(event.body);
-          }
-          // switch (event.type) {
-          //   case HttpEventType.UploadProgress:
-          //     this.file.progress = Math.round(
-          //       (event.loaded * 100) / event.total
-          //     );
-          //     break;
-          //   case HttpEventType.Response:
-          //     return event;
+          // if (event.type === HttpEventType.UploadProgress) {
+          //   const percentDone = Math.round((100 * event.loaded) / event.total);
+          //   console.log(`File is ${percentDone}% uploaded.`);
+          // } else if (event instanceof HttpResponse) {
+          //   console.log('File is completely uploaded!');
+          //   console.log(event.body);
           // }
-          return event;
+          switch (event.type) {
+            case HttpEventType.UploadProgress:
+              this.file.progress = Math.round(
+                (event.loaded * 100) / event.total
+              );
+              break;
+            case HttpEventType.Response:
+              return event;
+          }
+         // return event;
         }),
-        catchError((err) => {
-          console.log('err', err);
-          return throwError(err);
+        catchError((error: HttpErrorResponse) => {
+          this.file.inProgress = false;
+          return of('Upload failed');
         })
       )
       .subscribe((event: any) => {
         if (typeof event === 'object') {
-          this.form.patchValue({ image_url: event.image_url });
+          this.form.patchValue({ image_url: event.body.image_url });
         }
       });
   }
