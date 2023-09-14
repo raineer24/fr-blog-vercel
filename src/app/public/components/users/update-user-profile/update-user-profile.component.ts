@@ -86,36 +86,24 @@ export class UpdateUserProfileComponent implements OnInit {
   }
   onClick(event: Event) {
     this.fileEvent = event;
-    this.file = this.fileEvent.target.files[0];
+    // this.file = this.fileEvent.target.files[0];
     console.log('FILE', this.file);
 
-    // const input = event.target as HTMLInputElement;
-    // if (input.files === null || input.files.length === 0) {
-    //   return;
-    // }
-    // const file = input.files[0];
-    //console.log('input files [0]', file);
-    // const fileInput = this.fileUpload.nativeElement;
-    // console.log('fileInput', fileInput);
-    // fileInput.click();
-    // fileInput.onchange = () => {
-    //   this.file = {
-    //     data: fileInput.files[0],
-    //     inProgress: false,
-    //     progress: 0,
-    //   };
-    // };
-    console.log('this file', this.file);
-    this.fileUpload.nativeElement.value = '';
+    this.file = {
+      data: this.fileEvent.target.files[0],
+      inProgress: false,
+      progress: 0,
+    };
     this.uploadFile();
   }
 
   uploadFile() {
     const formData: any = new FormData();
     console.log('this.file.data', this.file);
-    formData.append('image', this.file);
+    formData.append('image', this.file.data);
     // this.file.inProgress = true;
     console.log('formdatas', formData);
+    this.file.inProgress = true;
     formData.forEach((value: string, key: string) => {
       console.log(key + ' ' + value);
     });
