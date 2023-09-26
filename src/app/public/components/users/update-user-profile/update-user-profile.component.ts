@@ -151,7 +151,11 @@ export class UpdateUserProfileComponent implements OnInit {
       )
       .subscribe((event: any) => {
         if (typeof event === 'object') {
+<<<<<<< HEAD
           this.form.patchValue({ image_url: event.body.image_url });
+=======
+          this.form.patchValue({ image_url: event.image_url });
+>>>>>>> 7efa2c5 ( set profile img)
         }
       });
   }
