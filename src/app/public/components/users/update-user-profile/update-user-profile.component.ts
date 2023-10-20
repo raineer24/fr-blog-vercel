@@ -13,6 +13,7 @@ import {
   HttpEvent,
   HttpErrorResponse,
   HttpResponse,
+  HttpClient,
 } from '@angular/common/http';
 import { WINDOW } from 'src/window.token';
 import { Inject } from '@angular/core';
@@ -38,6 +39,7 @@ export interface File {
 export class UpdateUserProfileComponent implements OnInit {
   @ViewChild('fileUpload', { static: false }) fileUpload!: ElementRef;
   //fileUpload!: ElementRef;
+  progress: number | undefined;
 
   file: File = {
     data: null,
@@ -54,6 +56,7 @@ export class UpdateUserProfileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
     private userService: UserService,
+    private http: HttpClient,
     @Inject(WINDOW) private window: Window
   ) {}
 
@@ -107,12 +110,39 @@ export class UpdateUserProfileComponent implements OnInit {
     };
   }
 
+  upload(file: any) {
+    this.progress = 1;
+    const formData = new FormData();
+    formData.append("iimage", file);
+
+    this.http
+      .post("http://localhost:5000/api/users/upload", formData, {
+        reportProgress: true,
+        observe: "events"
+      })
+      .pipe(
+        map((event: any) => {
+          if (event.type == HttpEventType.UploadProgress) {
+            this.progress = Math.round((100 / event.total) * event.loaded);
+          } else if (event.type == HttpEventType.Response) {
+            this.progress = null;
+          }
+        }),
+        catchError((err: any) => {
+          this.progress = null;
+          alert(err.message);
+          return throwError(err.message);
+        })
+      )
+      .toPromise();
+  }
+
   uploadFile() {
     const formData: any = new FormData();
     console.log('this.file.data', this.file);
     formData.append('image', this.file.data);
     // this.file.inProgress = true;
-       this.file.inProgress = true;
+    this.file.inProgress = true;
 
     this.userService
       .uploadProfileImage(formData)
