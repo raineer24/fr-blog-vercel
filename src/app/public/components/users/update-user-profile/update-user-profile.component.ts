@@ -40,7 +40,7 @@ export class UpdateUserProfileComponent implements OnInit {
   @ViewChild('fileUpload', { static: false }) fileUpload!: ElementRef;
   //fileUpload!: ElementRef;
   progress: number | undefined;
-
+  imageUrl: any;
   file: File = {
     data: null,
     inProgress: false,
@@ -105,37 +105,18 @@ export class UpdateUserProfileComponent implements OnInit {
         progress: 0,
       };
       this.fileUpload.nativeElement.value = '';
-
+      //Show image preview
+      let reader = new FileReader();
+      reader.onload = (event:any) => {
+        this.imageUrl = event.target.result;
+        console.log('thisimgurl', reader.result)
+      }
+      reader.readAsDataURL(this.file.data);
       this.uploadFile();
     };
   }
 
-  upload(file: any) {
-    this.progress = 1;
-    const formData = new FormData();
-    formData.append("iimage", file);
 
-    this.http
-      .post("http://localhost:5000/api/users/upload", formData, {
-        reportProgress: true,
-        observe: "events"
-      })
-      .pipe(
-        map((event: any) => {
-          if (event.type == HttpEventType.UploadProgress) {
-            this.progress = Math.round((100 / event.total) * event.loaded);
-          } else if (event.type == HttpEventType.Response) {
-            this.progress = null;
-          }
-        }),
-        catchError((err: any) => {
-          this.progress = null;
-          alert(err.message);
-          return throwError(err.message);
-        })
-      )
-      .toPromise();
-  }
 
   uploadFile() {
     const formData: any = new FormData();
