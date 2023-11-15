@@ -22,6 +22,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private userService: UserService,
     @Inject(WINDOW) private window: Window
   ) {}
+  
 
   ngOnInit(): void {
     this.sub = this.activatedRoute.params.subscribe((params) => {

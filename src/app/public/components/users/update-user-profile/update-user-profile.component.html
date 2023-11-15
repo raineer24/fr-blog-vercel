@@ -1,1 +1,48 @@
-<p>update-user-profile works!</p>
+<form [formGroup]="form" (ngSubmit)="update()">
+  <div>
+    <mat-card class="container">
+      <div style="width: 80%">
+        <mat-card>
+          <mat-card-content>
+            <img width="100%" *ngIf="imageUrl" [src]="imageUrl" class="image">
+            <ul>
+              <li>
+                <mat-progress-bar [value]="file.progress"></mat-progress-bar>
+              </li>
+            </ul>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button color="warn"  (click)="onClick()">
+              <mat-icon>cloud-upload</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+        <input type="file"   #fileUpload id="fileUpload" name="fileUpload" accept="image/*" style="display:none;">
+      </div>
+
+      <div class="container" style="width: 80%;">
+        <mat-form-field>
+          <input matInput placeholder="ID" formControlName="id" />
+        </mat-form-field>
+  
+        <mat-form-field>
+          <input matInput placeholder="Firstname" formControlName="firstName" />
+        </mat-form-field>
+  
+        <mat-form-field>
+          <input matInput placeholder="Username" formControlName="username" />
+        </mat-form-field>
+      </div>
+      
+
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="!form.valid"
+        type="submit"
+      >
+        Update profile
+      </button>
+    </mat-card>
+  </div>
+</form>

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { UserI } from '../model/user.interface';
 import { environment } from '../../environments/environment';
+import { AuthenticationService } from './authentication.service';
 
 export interface UserData {
   results: UserI[];
@@ -27,7 +28,15 @@ export class UserService {
   findOne(id: number): Observable<UserI> {
     return this.http.get(`${this.appRoot}/api/users/` + id).pipe(
       map((user: UserI) => {
-        console.log('find One' ,user)
+        return user;
+      })
+    );
+  }
+
+  updateOne(user: any): Observable<UserI> {
+    return this.http.put(`${this.appRoot}/api/users/` + user.id, user).pipe(
+      map((user: UserI) => {
+        console.log('updateone user', user);
         return user;
       })
     );
@@ -47,6 +56,15 @@ export class UserService {
       }),
       catchError((err) => throwError(err))
     );
+  }
+
+  uploadProfileImage(formData: FormData): Observable<any> {
+      const headers = new HttpHeaders({ 'ngsw-bypass': ''});
+      return this.http.post<FormData>(`${this.appRoot}/api/users/upload`, formData , {
+      reportProgress: true,
+      observe: 'events',
+     
+    });
   }
 
   paginateByName(

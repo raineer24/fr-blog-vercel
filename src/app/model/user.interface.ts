@@ -9,4 +9,5 @@ export interface UserI {
   username?: string;
   image?: string;
   image_id?: string;
+  image_url?: string;
 }
