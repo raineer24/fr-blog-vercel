@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { BlogEntriesPageable } from 'src/app/model/blog-entry.interface';
+
 
 @Component({
   selector: 'app-all-blog-entries',
