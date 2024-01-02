@@ -22,7 +22,14 @@ export class AllBlogEntriesComponent implements OnInit {
 
   constructor(private router: Router, @Inject(WINDOW) private window: Window) { }
 
+  onPaginateChange(event: PageEvent) {
+    event.pageIndex = event.pageIndex + 1;
+    this.paginate.emit(event);
+  }
 
+  navigate(id: string) {
+    this.router.navigateByUrl('blog-entries/' + id);
+  }
   ngOnInit(): void {
   }
 
