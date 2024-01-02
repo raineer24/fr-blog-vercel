@@ -3,7 +3,8 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { BlogEntriesPageable } from 'src/app/model/blog-entry.interface';
-
+import { WINDOW } from 'src/window.token';
+import { Inject } from '@angular/core';
 
 @Component({
   selector: 'app-all-blog-entries',
@@ -17,7 +18,10 @@ export class AllBlogEntriesComponent implements OnInit {
 
   pageEvent: PageEvent | undefined;
 
-  constructor() { }
+  origin = this.window.location.origin;
+
+  constructor(private router: Router, @Inject(WINDOW) private window: Window) { }
+
 
   ngOnInit(): void {
   }
