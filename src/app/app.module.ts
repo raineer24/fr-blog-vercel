@@ -22,11 +22,12 @@ import { ErrorInterceptor } from './guards/error.interceptor';
 import { JwtHelperService ,JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { WINDOW_PROVIDERS } from '../window.token';
 import {  JwtInterceptor, } from './interceptors/jwt.interceptor';
+import { AllBlogEntriesComponent } from './components/blog-entry/all-blog-entries/all-blog-entries.component';
 export function tokenGetter() {
   return localStorage.getItem('nestjs_chat_app');
 }
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AllBlogEntriesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
