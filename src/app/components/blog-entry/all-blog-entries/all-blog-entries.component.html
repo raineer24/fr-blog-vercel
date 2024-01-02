@@ -11,14 +11,14 @@
             <div style="margin-left:30px;">
                 <h2>{{blogEntry.title}}</h2>
                 <p>{{blogEntry.content}}</p>
-                <small>Author: {{blogEntry.author.firstName}}</small>
+                <small>Author: {{blogEntry.author?.firstName}}</small>
             </div>
         </div>
     </mat-card>
 
     <mat-paginator
-    [length]="blogEntries?.meta.totalItems" 
-    [pageSize]="blogEntries?.meta.itemsPerPage" 
+    [length]="blogEntries?.meta?.totalItems" 
+    [pageSize]="blogEntries?.meta?.itemsPerPage" 
     [pageSizeOptions]="[5,10,25,100]"
     (page)="pageEvent = $event; onPaginateChange($event)"
     showFirstLastButtons>
