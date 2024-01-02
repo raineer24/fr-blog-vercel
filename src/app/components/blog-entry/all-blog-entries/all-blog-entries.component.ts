@@ -12,6 +12,11 @@ import { BlogEntriesPageable } from 'src/app/model/blog-entry.interface';
 })
 export class AllBlogEntriesComponent implements OnInit {
 
+  @Input() blogEntries: BlogEntriesPageable | undefined;
+  @Output() paginate: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
+
+  pageEvent: PageEvent | undefined;
+
   constructor() { }
 
   ngOnInit(): void {

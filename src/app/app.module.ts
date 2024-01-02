@@ -23,6 +23,7 @@ import { JwtHelperService ,JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { WINDOW_PROVIDERS } from '../window.token';
 import {  JwtInterceptor, } from './interceptors/jwt.interceptor';
 import { AllBlogEntriesComponent } from './components/blog-entry/all-blog-entries/all-blog-entries.component';
+import { MatCardModule } from '@angular/material/card';
 export function tokenGetter() {
   return localStorage.getItem('nestjs_chat_app');
 }
@@ -43,7 +44,7 @@ export function tokenGetter() {
     MatSnackBarModule,
     HttpClientModule,
     MatToolbarModule,
- 
+    MatCardModule,
     SharedModule,
     JwtModule.forRoot({
       config: {
