@@ -7,45 +7,59 @@ import { AuthenticationService } from './authentication.service';
 import { BlogEntriesPageable, BlogEntry } from '../model/blog-entry.interface';
 
 export interface UserData {
-    results: BlogEntry[];
-    pagination: {
-      length: number;
-      size: number;
-      lastPage: number;
-      page: number;
-      startIndex: number;
-      endIndex: number;
-    };
+  results: BlogEntry[];
+  pagination: {
+    length: number;
+    size: number;
+    lastPage: number;
+    page: number;
+    startIndex: number;
+    endIndex: number;
+  };
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class BlogService {
+  appRoot = environment.appRoot;
+  constructor(private http: HttpClient) {}
+
+  findOne(id: number): Observable<BlogEntry> {
+    const url = `${this.appRoot}/api/blogs/`;
+    return this.http.get<BlogEntry>(url + id);
   }
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class BlogService {
-    appRoot = environment.appRoot;
-    constructor(private http: HttpClient) { }
+  indexAll(page: number, limit: number): Observable<BlogEntriesPageable> {
+    let params = new HttpParams();
+    console.log('paramms', params);
+    params = params.append('page', String(page));
+    params = params.append('limit', String(limit));
 
-    findOne(id: number): Observable<BlogEntry> {
-      const url = `${this.appRoot}/api/blogs/`;
-      return this.http.get<BlogEntry>(url + id);
-    }
-  
-    indexAll(page: number, limit: number): Observable<BlogEntriesPageable> {
-      let params = new HttpParams();
-  
-      params = params.append('page', String(page));
-      params = params.append('limit', String(limit));
-  
-      return this.http.get<BlogEntriesPageable>('/api/blogs/pages?', {params});
-    }
-  
-    indexByUser(userId: number, page: number, limit: number): Observable<BlogEntriesPageable> {
-      let params = new HttpParams();
-  
-      params = params.append('page', String(page));
-      params = params.append('limit', String(limit));
-  
-      return this.http.get<BlogEntriesPageable>('/api/blog-entries/user/' + String(userId), {params});
-    }
-  
+    return this.http
+      .get<BlogEntriesPageable>(`${this.appRoot}/api/blogs/pages?`, { params })
+      .pipe(
+        map((userData: any) => {
+          console.log('userdata', userData);
+          return userData;
+        }),
+        catchError((err) => throwError(err))
+      );
   }
+
+  indexByUser(
+    userId: number,
+    page: number,
+    limit: number
+  ): Observable<BlogEntriesPageable> {
+    let params = new HttpParams();
+
+    params = params.append('page', String(page));
+    params = params.append('limit', String(limit));
+
+    return this.http.get<BlogEntriesPageable>(
+      '/api/blog-entries/user/' + String(userId),
+      { params }
+    );
+  }
+}

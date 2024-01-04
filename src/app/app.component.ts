@@ -4,8 +4,11 @@ import { UserI } from './model/user.interface';
 import { AuthenticationService } from './services/authentication.service';
 import { environment } from '../environments/environment';
 import { ChangeDetectionStrategy } from '@angular/core';
+import { BlogService } from './services/blog.service';
+import { PageEvent } from '@angular/material/paginator';
+import { BlogEntriesPageable } from './model/blog-entry.interface';
+import { Observable } from 'rxjs';
 @Component({
-
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
@@ -19,7 +22,8 @@ export class AppComponent {
   url!: string;
   constructor(
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private blogService: BlogService
   ) {
     this.authService.user.subscribe((x) => (this.user = x));
   }
@@ -31,6 +35,18 @@ export class AppComponent {
 
   logout() {
     this.authService.logout();
+  }
+
+  blogEntries$: Observable<BlogEntriesPageable> = this.blogService.indexAll(
+    1,
+    10
+  );
+
+  onPaginateChange(event: PageEvent) {
+    this.blogEntries$ = this.blogService.indexAll(
+      event.pageIndex,
+      event.pageSize
+    );
   }
 
   // getProfileImageUrl(key: string) {
@@ -49,7 +65,8 @@ export class AppComponent {
     let x = this.authService.userValue?.image;
     if (!x) {
       console.log('no image');
-      this.url = 'https://t4.ftcdn.net/jpg/01/24/65/69/240_F_124656969_x3y8YVzvrqFZyv3YLWNo6PJaC88SYxqM.jpg';
+      this.url =
+        'https://t4.ftcdn.net/jpg/01/24/65/69/240_F_124656969_x3y8YVzvrqFZyv3YLWNo6PJaC88SYxqM.jpg';
     } else {
       this.url = this.authService.userValue?.image || '';
     }

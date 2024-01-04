@@ -12,8 +12,8 @@ import { Inject } from '@angular/core';
   styleUrls: ['./all-blog-entries.component.scss']
 })
 export class AllBlogEntriesComponent implements OnInit {
-
-  @Input() blogEntries: BlogEntriesPageable | undefined;
+  userId: number | null = null;
+  @Input() blogEntries: BlogEntriesPageable | null = null;
   @Output() paginate: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
 
   pageEvent: PageEvent | undefined;
@@ -26,8 +26,8 @@ export class AllBlogEntriesComponent implements OnInit {
     event.pageIndex = event.pageIndex + 1;
     this.paginate.emit(event);
   }
-
-  navigate(id: string) {
+  navigate(id: any) {
+  
     this.router.navigateByUrl('blog-entries/' + id);
   }
   ngOnInit(): void {
