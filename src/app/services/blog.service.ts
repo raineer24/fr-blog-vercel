@@ -56,8 +56,9 @@ export class BlogService {
     params = params.append('size', String(size));
 
     return this.http.get(url, { params }).pipe(
-      map((userData: any) => {
-        return userData;
+      map((blogData: any) => {
+        console.log('blogservice ,blogdata', blogData)
+        return blogData;
       }),
       catchError((err) => throwError(err))
     );
