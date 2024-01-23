@@ -6,8 +6,8 @@ import { environment } from '../environments/environment';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { BlogService } from './services/blog.service';
 import { PageEvent } from '@angular/material/paginator';
-import { BlogEntriesPageable } from './model/blog-entry.interface';
-import { Observable } from 'rxjs';
+import { BlogEntriesPageable, BlogEntry } from './model/blog-entry.interface';
+import { Observable, map } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -42,11 +42,23 @@ export class AppComponent {
     10
   );
 
-  onPaginateChange(event: PageEvent) {
-    this.blogEntries$ = this.blogService.indexAll(
-      event.pageIndex,
-      event.pageSize
-    );
+  // onPaginateChange(event: PageEvent) {
+  //   this.blogEntries$ = this.blogService.indexAll(
+  //     event.pageIndex,
+  //     event.pageSize
+  //   );
+  // }
+  onPaginateChange1(event: PageEvent) {
+    let page = event.pageIndex;
+    let size = event.pageSize;
+    page = page + 1;
+    this.blogService
+      .findAll(page, size)
+      .pipe(map((blogData: BlogEntry) => {
+        console.log('blogdata', blogData);
+        return blogData;
+      }))
+      .subscribe();
   }
 
   // getProfileImageUrl(key: string) {

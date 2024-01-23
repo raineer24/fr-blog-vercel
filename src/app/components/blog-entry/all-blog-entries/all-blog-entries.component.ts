@@ -22,7 +22,7 @@ export class AllBlogEntriesComponent implements OnInit {
 
   constructor(private router: Router, @Inject(WINDOW) private window: Window) { }
 
-  onPaginateChange(event: PageEvent) {
+  onPaginateChange1(event: PageEvent) {
     event.pageIndex = event.pageIndex + 1;
     this.paginate.emit(event);
   }
