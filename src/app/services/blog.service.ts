@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
 import { AuthenticationService } from './authentication.service';
 import { BlogEntriesPageable, BlogEntry } from '../model/blog-entry.interface';
 
-export interface UserData {
+export interface BlogData {
   results: BlogEntry[];
   pagination: {
     length: number;
@@ -46,6 +46,24 @@ export class BlogService {
         catchError((err) => throwError(err))
       );
   }
+
+  findAll(page: number, size: number): Observable<BlogEntry> {
+    const url = `${this.appRoot}/api/blogs/pages?`;
+
+    let params = new HttpParams();
+
+    params = params.append('page', String(page));
+    params = params.append('size', String(size));
+
+    return this.http.get(url, { params }).pipe(
+      map((userData: any) => {
+        return userData;
+      }),
+      catchError((err) => throwError(err))
+    );
+  }
+
+
 
   indexByUser(
     userId: number,
